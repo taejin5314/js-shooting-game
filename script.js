@@ -22,19 +22,20 @@ class Planet {
   }
 
   draw() {
-    // ctx.fillStyle = this.color;
+    ctx.fillStyle = this.color;
     // ctx.shadowBlur = this.shadowBlur;
     // ctx.shadowOffsetX = this.shadowOffsetX;
     // ctx.shadowOffsetY = this.shadowOffsetY;
     // ctx.shadowColor = this.shadowColor;
     ctx.translate(this.x, this.y);
+    ctx.save();
     ctx.arc(0, 0, 100, 0, Math.PI * 2);
-    ctx.drawImage(planetImage, -100, -100, 200, 200);
     ctx.fill();
+    ctx.drawImage(planetImage, 0, 0, 450, 450, this.x - 100, this.y - 100, 200, 200);
+    ctx.restore();
   }
 
   update() {
-    ctx.translate(this.x, this.y);
     ctx.rotate((this.deg) * (Math.PI / 180));
     ctx.restore();
   }
