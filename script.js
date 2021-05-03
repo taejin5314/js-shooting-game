@@ -18,23 +18,24 @@ class Planet {
     this.shadowOffsetX = 0;
     this.shadowOffsetY = 0;
     this.shadowColor = '#999';
-    this.deg = 2;
+    this.deg = 0.1;
   }
 
   draw() {
+    // ctx.fillStyle = this.color;
+    // ctx.shadowBlur = this.shadowBlur;
+    // ctx.shadowOffsetX = this.shadowOffsetX;
+    // ctx.shadowOffsetY = this.shadowOffsetY;
+    // ctx.shadowColor = this.shadowColor;
     ctx.translate(this.x, this.y);
-    ctx.fillStyle = this.color;
-    ctx.shadowBlur = this.shadowBlur;
-    ctx.shadowOffsetX = this.shadowOffsetX;
-    ctx.shadowOffsetY = this.shadowOffsetY;
-    ctx.shadowColor = this.shadowColor;
-    ctx.arc(this.x, this.y, 100, 0, Math.PI * 2);
+    ctx.arc(0, 0, 100, 0, Math.PI * 2);
+    ctx.drawImage(planetImage, -100, -100, 200, 200);
     ctx.fill();
   }
 
   update() {
-    ctx.drawImage(planetImage, 0, 0, 200, 200);
-    // ctx.rotate((this.deg) * (Math.PI / 180));
+    ctx.translate(this.x, this.y);
+    ctx.rotate((this.deg) * (Math.PI / 180));
     ctx.restore();
   }
 }
