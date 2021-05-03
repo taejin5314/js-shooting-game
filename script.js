@@ -3,8 +3,8 @@ const ctx = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
-let deg = 0;
-const planets = [];
+const rotateSpeed = 0.1;
+const radius = 150;
 
 const planetImage = new Image();
 planetImage.src = './planets/planet_07.png';
@@ -19,8 +19,8 @@ class Planet {
     this.y = canvas.height / 2;
     this.imageWidth = 450;
     this.imageHeight = 450;
-    this.radius = 150;
-    this.deg = 0.1;
+    this.radius = radius;
+    this.deg = rotateSpeed;
   }
 
   draw() {
@@ -43,11 +43,11 @@ class Player {
 // projectiles
 // asteroid
 
-planets.push(new Planet());
+let planet = new Planet();
 
 function animate() {
-  planets[0].draw();
-  planets[0].update();
+  planet.draw();
+  planet.update();
   requestAnimationFrame(animate);
 }
 animate();
