@@ -9,6 +9,10 @@ const planets = [];
 const planetImage = new Image();
 planetImage.src = './planets/planet_07.png';
 
+const spaceshipImage = new Image();
+spaceshipImage.src = './spaceship.png';
+
+// planet
 class Planet {
   constructor() {
     this.x = canvas.width / 2;
@@ -16,7 +20,7 @@ class Planet {
     this.imageWidth = 450;
     this.imageHeight = 450;
     this.radius = 150;
-    this.deg = 0.5;
+    this.deg = 0.1;
   }
 
   draw() {
@@ -30,6 +34,14 @@ class Planet {
     ctx.translate(-this.x, -this.y);
   }
 }
+
+// player
+class Player {
+  constructor() {
+  }
+}
+// projectiles
+// asteroid
 
 planets.push(new Planet());
 
