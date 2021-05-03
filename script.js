@@ -13,31 +13,21 @@ class Planet {
   constructor() {
     this.x = canvas.width / 2;
     this.y = canvas.height / 2;
-    this.color = 'white';
-    this.shadowBlur = 100;
-    this.shadowOffsetX = 0;
-    this.shadowOffsetY = 0;
-    this.shadowColor = '#999';
-    this.deg = 0.1;
+    this.imageWidth = 450;
+    this.imageHeight = 450;
+    this.radius = 150;
+    this.deg = 0.5;
   }
 
   draw() {
-    ctx.fillStyle = this.color;
-    // ctx.shadowBlur = this.shadowBlur;
-    // ctx.shadowOffsetX = this.shadowOffsetX;
-    // ctx.shadowOffsetY = this.shadowOffsetY;
-    // ctx.shadowColor = this.shadowColor;
-    ctx.translate(this.x, this.y);
-    ctx.save();
-    ctx.arc(0, 0, 100, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.drawImage(planetImage, 0, 0, 450, 450, this.x - 100, this.y - 100, 200, 200);
-    ctx.restore();
+    ctx.clearRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+    ctx.drawImage(planetImage, 0, 0, this.imageWidth, this.imageHeight, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
   }
 
   update() {
+    ctx.translate(this.x, this.y);
     ctx.rotate((this.deg) * (Math.PI / 180));
-    ctx.restore();
+    ctx.translate(-this.x, -this.y);
   }
 }
 
