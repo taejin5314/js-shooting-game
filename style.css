@@ -11,3 +11,7 @@
   background-image: url('./space.jpg');
   background-size: cover;
 }
+
+#canvas.playing {
+  cursor: url('./crosshair.png') 17.5 17.5, auto !important;
+}
