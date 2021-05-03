@@ -18,9 +18,11 @@ class Planet {
     this.shadowOffsetX = 0;
     this.shadowOffsetY = 0;
     this.shadowColor = '#999';
+    this.deg = 2;
   }
 
   draw() {
+    ctx.translate(this.x, this.y);
     ctx.fillStyle = this.color;
     ctx.shadowBlur = this.shadowBlur;
     ctx.shadowOffsetX = this.shadowOffsetX;
@@ -31,10 +33,9 @@ class Planet {
   }
 
   update() {
-    ctx.translate(this.x, this.y);
-    ctx.drawImage(planetImage, 0, 0);
+    ctx.drawImage(planetImage, 0, 0, 200, 200);
+    // ctx.rotate((this.deg) * (Math.PI / 180));
     ctx.restore();
-    ctx.rotate((deg += 0.1) * (Math.PI / 180));
   }
 }
 
@@ -43,6 +44,6 @@ planets.push(new Planet());
 function animate() {
   planets[0].draw();
   planets[0].update();
-  // requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }
 animate();
