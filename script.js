@@ -49,10 +49,10 @@ class Player {
     this.playerDistance = 30;
     this.positionAngle = Math.atan2((y - canvas.height / 2), (x - canvas.width / 2));
     this.playerAngle = Math.atan2((x - canvas.width / 2), -(y - canvas.height / 2));
-    this.x = (radius + this.playerDistance) * Math.cos(this.positionAngle) + (canvas.width / 2) - radius * 0.28;
-    // this.x = (radius + this.playerDistance) * Math.cos(this.positionAngle)
-    this.y = (radius + this.playerDistance) * Math.sin(this.positionAngle) + (canvas.height / 2) - radius * 0.35;
-    // this.y = (radius + this.playerDistance) * Math.sin(this.positionAngle)
+    // this.x = (radius + this.playerDistance) * Math.cos(this.positionAngle) + (canvas.width / 2) - radius * 0.28;
+    this.x = (radius + this.playerDistance) * Math.cos(this.positionAngle)
+    // this.y = (radius + this.playerDistance) * Math.sin(this.positionAngle) + (canvas.height / 2) - radius * 0.35;
+    this.y = (radius + this.playerDistance) * Math.sin(this.positionAngle)
     this.imageWidth = 343;
     this.imageHeight = 383;
   }
@@ -60,9 +60,9 @@ class Player {
   draw() {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(2);
-    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+    ctx.rotate(this.playerAngle);
     ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, this.x, this.y, 80, 100);
+    // ctx.translate(-canvas.width / 2, -canvas.height / 2);
     ctx.restore();
   }
   update() {
