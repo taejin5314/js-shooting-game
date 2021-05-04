@@ -12,11 +12,14 @@ planetImage.src = './planets/planet_07.png';
 const spaceshipImage = new Image();
 spaceshipImage.src = './spaceship.png';
 
+window.addEventListener('resize', function () {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+})
+
 // planet
 class Planet {
   constructor() {
-    this.x = canvas.width / 2;
-    this.y = canvas.height / 2;
     this.imageWidth = 450;
     this.imageHeight = 450;
     this.radius = radius;
@@ -27,10 +30,10 @@ class Planet {
   draw() {
     ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.translate(this.x, this.y);
+    ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate((this.deg += rotateSpeed) * (Math.PI / 180));
-    ctx.translate(-this.x, -this.y);
-    ctx.drawImage(planetImage, 0, 0, this.imageWidth, this.imageHeight, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+    ctx.drawImage(planetImage, 0, 0, this.imageWidth, this.imageHeight, canvas.width / 2 - this.radius, canvas.height / 2 - this.radius, this.radius * 2, this.radius * 2);
     ctx.restore();
   }
 }
