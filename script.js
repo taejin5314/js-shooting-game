@@ -20,18 +20,20 @@ class Planet {
     this.imageWidth = 450;
     this.imageHeight = 450;
     this.radius = radius;
-    this.deg = rotateSpeed;
+    this.deg = 0;
   }
 
   draw() {
+    ctx.save();
     ctx.clearRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
-    ctx.drawImage(planetImage, 0, 0, this.imageWidth, this.imageHeight, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
   }
 
   update() {
     ctx.translate(this.x, this.y);
-    ctx.rotate((this.deg) * (Math.PI / 180));
+    ctx.rotate((this.deg += rotateSpeed) * (Math.PI / 180));
     ctx.translate(-this.x, -this.y);
+    ctx.drawImage(planetImage, 0, 0, this.imageWidth, this.imageHeight, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+    ctx.restore();
   }
 }
 
@@ -40,6 +42,7 @@ const mouse = {
   x: undefined,
   y: undefined
 }
+
 
 // player
 class Player {
@@ -56,9 +59,11 @@ class Player {
 
   draw() {
     // ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, this.x, this.y, 50, 60);
+    ctx.save();
     ctx.clearRect(this.x, this.y, 100, 100)
     ctx.fillRect(this.x, this.y, 50, 50);
     ctx.fill();
+    ctx.restore();
   }
   update() {
     this.playerAngle -= rotateSpeed;
