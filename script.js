@@ -38,7 +38,6 @@ window.addEventListener('click', function (e) {
     btnPressed = true;
     document.getElementById('canvas').classList.add('playing');
   }
-
 })
 
 window.addEventListener('mousemove', function (e) {
@@ -163,3 +162,14 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
+
+// collision detecting function
+function collision(first, second) {
+  if (!(first.x >= second.x + second.width ||
+    first.x + first.width <= second.x ||
+    first.y >= second.y + second.height ||
+    first.y + first.height <= second.y)
+  ) {
+    return true;
+  }
+}
