@@ -144,6 +144,11 @@ class Projectile {
 
 
 // asteroid
+class Asteroid {
+  constructor() {
+
+  }
+}
 
 
 function animate() {
