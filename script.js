@@ -35,11 +35,25 @@ class Planet {
   }
 }
 
+// mouse position
+const mouse = {
+  x: undefined,
+  y: undefined
+}
+
 // player
 class Player {
-  constructor() {
+  constructor(x, y) {
+    this.playerDistance = 50;
+    this.angle =
+      this.x = (radius + this.playerDistance)
   }
 }
+
+window.addEventListener('mousemove', function () {
+
+})
+
 // projectiles
 // asteroid
 
