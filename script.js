@@ -23,12 +23,10 @@ class Planet {
     this.deg = 0;
   }
 
+  // draw rotating planet.
   draw() {
     ctx.save();
-    ctx.clearRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
-  }
-
-  update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.translate(this.x, this.y);
     ctx.rotate((this.deg += rotateSpeed) * (Math.PI / 180));
     ctx.translate(-this.x, -this.y);
@@ -48,25 +46,19 @@ const mouse = {
 class Player {
   constructor(x, y) {
     // distance from the center of planet and player
-    this.playerDistance = 100;
+    this.playerDistance = 0;
     this.playerAngle = Math.atan2((x - canvas.width / 2), -(y - canvas.height / 2)) - Math.PI / 2;
     // this.angle = Math.atan((y - canvas.height / 2) / (x - canvas.width / 2));
-    this.x = (radius + this.playerDistance) * Math.cos(this.playerAngle) + canvas.width / 2;
-    this.y = (radius + this.playerDistance) * Math.sin(this.playerAngle) + canvas.height / 2;
+    this.x = (radius + this.playerDistance) * Math.cos(this.playerAngle) + (canvas.width / 2);
+    this.y = (radius + this.playerDistance) * Math.sin(this.playerAngle) + (canvas.height / 2);
     this.imageWidth = 343;
     this.imageHeight = 383;
   }
 
   draw() {
-    // ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, this.x, this.y, 50, 60);
-    ctx.save();
-    ctx.clearRect(this.x, this.y, 100, 100)
-    ctx.fillRect(this.x, this.y, 50, 50);
-    ctx.fill();
-    ctx.restore();
+    ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, this.x, this.y, 80, 100);
   }
   update() {
-    this.playerAngle -= rotateSpeed;
   }
 }
 
@@ -82,7 +74,6 @@ let planet = new Planet();
 
 function animate() {
   planet.draw();
-  planet.update();
   let player = new Player(mouse.x, mouse.y);
   player.draw();
   player.update();
