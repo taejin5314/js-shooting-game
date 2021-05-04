@@ -6,6 +6,8 @@ canvas.width = window.innerWidth;
 const rotateSpeed = 0.1;
 const radius = 150;
 let gameStart = false;
+let btnPressed = false;
+let btnHover = false;
 
 const planetImage = new Image();
 planetImage.src = './planets/planet_07.png';
@@ -19,12 +21,17 @@ window.addEventListener('resize', function () {
 })
 
 window.addEventListener('click', function (e) {
-  console.log(mouse.x, mouse.y);
+  if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) {
+    gameStart = true;
+    btnPressed = true;
+  }
 })
 
 window.addEventListener('mousemove', function (e) {
   mouse.x = e.x;
   mouse.y = e.y;
+  if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) btnHover = true;
+  else btnHover = false;
 })
 
 // planet
@@ -79,13 +86,22 @@ class Player {
   }
 }
 
+const startBtnImage = {
+  default: new Image(),
+  hover: new Image()
+}
+startBtnImage.default.src = './play.png';
+startBtnImage.hover.src = './play-pressed.png';
 // start button
 class StartBtn {
   constructor() {
     this.radius = 50;
   }
   draw() {
-
+    if (!btnPressed) {
+      if (btnHover) ctx.drawImage(startBtnImage.hover, 0, 0, 49, 20, canvas.width / 2 - 40, canvas.height / 2 - 16, 80, 32)
+      else ctx.drawImage(startBtnImage.default, 0, 0, 49, 20, canvas.width / 2 - 40, canvas.height / 2 - 16, 80, 32)
+    }
   }
 }
 
@@ -97,6 +113,7 @@ let startBtn = new StartBtn();
 
 function animate() {
   planet.draw();
+  startBtn.draw();
   let player = new Player(mouse.x, mouse.y);
   player.draw();
   requestAnimationFrame(animate);
