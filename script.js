@@ -6,10 +6,11 @@ canvas.width = window.innerWidth;
 const rotateSpeed = 0.1;
 const radius = 150;
 const projectiles = [];
-let playerPosition = {
+let player = {
   x: undefined,
-  y: undefined
-}
+  y: undefined,
+  angle: undefined
+};
 let gameStart = false;
 let btnPressed = false;
 let btnHover = false;
@@ -95,6 +96,7 @@ class Player {
       ctx.rotate(0);
       ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -40, -80 - radius, 80, 100);
     }
+    player.angle = this.playerAngle;
     ctx.restore();
   }
 }
@@ -128,9 +130,11 @@ class Projectile {
     this.y = y;
   }
   draw() {
-    // ctx.save();
-    ctx.drawImage(projectileImage, 32, 0, 32, 32, this.x - 25, this.y - 25, 50, 50)
-    // ctx.restore();
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(player.angle);
+    ctx.drawImage(projectileImage, 0, 32, 32, 32, -25, -120 - radius, 50, 50)
+    ctx.restore();
   }
 }
 
