@@ -13,5 +13,5 @@
 }
 
 #canvas.playing {
-  cursor: url('./crosshair.png') 17.5 17.5, auto !important;
+  cursor: crosshair;
 }

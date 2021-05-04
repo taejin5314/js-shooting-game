@@ -36,6 +36,7 @@ window.addEventListener('click', function (e) {
   if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) {
     gameStart = true;
     btnPressed = true;
+    document.getElementById('canvas').classList.add('playing');
   }
 
 })
