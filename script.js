@@ -5,6 +5,7 @@ canvas.width = window.innerWidth;
 
 const rotateSpeed = 0.1;
 const radius = 150;
+let gameStart = false;
 
 const planetImage = new Image();
 planetImage.src = './planets/planet_07.png';
@@ -15,6 +16,15 @@ spaceshipImage.src = './spaceship.png';
 window.addEventListener('resize', function () {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+})
+
+window.addEventListener('click', function (e) {
+  console.log(mouse.x, mouse.y);
+})
+
+window.addEventListener('mousemove', function (e) {
+  mouse.x = e.x;
+  mouse.y = e.y;
 })
 
 // planet
@@ -37,13 +47,13 @@ class Planet {
     ctx.restore();
   }
 }
+let planet = new Planet();
 
 // mouse position
 const mouse = {
   x: undefined,
   y: undefined
 }
-
 
 // player
 class Player {
@@ -58,29 +68,37 @@ class Player {
   draw() {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(this.playerAngle);
-    ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -40, -80 - radius, 80, 100);
+    if (gameStart) {
+      ctx.rotate(this.playerAngle);
+      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -40, -80 - radius, 80, 100);
+    } else {
+      ctx.rotate(0);
+      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -40, -80 - radius, 80, 100);
+    }
     ctx.restore();
-  }
-  update() {
   }
 }
 
-window.addEventListener('mousemove', function (e) {
-  mouse.x = e.x;
-  mouse.y = e.y;
-})
+// start button
+class StartBtn {
+  constructor() {
+    this.radius = 50;
+  }
+  draw() {
+
+  }
+}
+
+let startBtn = new StartBtn();
 
 // projectiles
 // asteroid
 
-let planet = new Planet();
 
 function animate() {
   planet.draw();
   let player = new Player(mouse.x, mouse.y);
   player.draw();
-  player.update();
   requestAnimationFrame(animate);
 }
 animate();
