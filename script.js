@@ -4,7 +4,7 @@ canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
 const rotateSpeed = 0.1;
-const radius = 150;
+const radius = 100;
 const projectiles = [];
 let player = {
   x: undefined,
@@ -91,10 +91,10 @@ class Player {
     ctx.translate(canvas.width / 2, canvas.height / 2);
     if (gameStart) {
       ctx.rotate(this.playerAngle);
-      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -40, -80 - radius, 80, 100);
+      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -30, -60 - radius, 60, 75);
     } else {
       ctx.rotate(0);
-      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -40, -80 - radius, 80, 100);
+      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -30, -60 - radius, 60, 75);
     }
     player.angle = this.playerAngle;
     ctx.restore();
@@ -154,7 +154,7 @@ function animate() {
   for (let i = 0; i < projectiles.length; i++) {
     projectiles[i].draw();
     projectiles[i].update();
-    if (projectiles[i] && projectiles[i].y < -canvas.height) {
+    if (projectiles[i] && projectiles[i].y < -canvas.height * 1.5) {
       projectiles.splice(i, 1);
       i--;
     }
