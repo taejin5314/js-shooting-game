@@ -30,7 +30,7 @@ window.addEventListener('click', function (e) {
   console.log(mouse.x, mouse.y);
   // if the game is started, and the player clicked, add the projectile to the array
   if (gameStart) {
-    projectiles.push(new Projectile(mouse.x, mouse.y));
+    projectiles.push(new Projectile());
   }
   // if the cursor clicked the start button
   if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) {
@@ -125,16 +125,20 @@ const projectileImage = new Image();
 projectileImage.src = './projectile.png'
 // projectiles
 class Projectile {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+  constructor() {
+    this.x = -25;
+    this.y = -120 - radius;
+    this.angle = player.angle;
   }
   draw() {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(player.angle);
-    ctx.drawImage(projectileImage, 0, 32, 32, 32, -25, -120 - radius, 50, 50)
+    ctx.rotate(this.angle);
+    ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x, this.y, 50, 50)
     ctx.restore();
+  }
+  update() {
+    this.y -= 20;
   }
 }
 
@@ -149,6 +153,11 @@ function animate() {
   player.draw();
   for (let i = 0; i < projectiles.length; i++) {
     projectiles[i].draw();
+    projectiles[i].update();
+    if (projectiles[i] && projectiles[i].y < -canvas.height) {
+      projectiles.splice(i, 1);
+      i--;
+    }
   }
   requestAnimationFrame(animate);
 }
