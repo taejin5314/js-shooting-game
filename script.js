@@ -5,6 +5,11 @@ canvas.width = window.innerWidth;
 
 const rotateSpeed = 0.1;
 const radius = 150;
+const projectiles = [];
+let playerPosition = {
+  x: undefined,
+  y: undefined
+}
 let gameStart = false;
 let btnPressed = false;
 let btnHover = false;
@@ -21,15 +26,23 @@ window.addEventListener('resize', function () {
 })
 
 window.addEventListener('click', function (e) {
+  console.log(mouse.x, mouse.y);
+  // if the game is started, and the player clicked, add the projectile to the array
+  if (gameStart) {
+    projectiles.push(new Projectile(mouse.x, mouse.y));
+  }
+  // if the cursor clicked the start button
   if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) {
     gameStart = true;
     btnPressed = true;
   }
+
 })
 
 window.addEventListener('mousemove', function (e) {
   mouse.x = e.x;
   mouse.y = e.y;
+  // if the cursor is on the start button
   if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) btnHover = true;
   else btnHover = false;
 })
@@ -106,13 +119,22 @@ class StartBtn {
 }
 let startBtn = new StartBtn();
 
-
+const projectileImage = new Image();
+projectileImage.src = './projectile.png'
 // projectiles
 class Projectile {
-  constructor() {
-
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    // ctx.save();
+    ctx.drawImage(projectileImage, 32, 0, 32, 32, this.x - 25, this.y - 25, 50, 50)
+    // ctx.restore();
   }
 }
+
+
 // asteroid
 
 
@@ -121,6 +143,9 @@ function animate() {
   startBtn.draw();
   let player = new Player(mouse.x, mouse.y);
   player.draw();
+  for (let i = 0; i < projectiles.length; i++) {
+    projectiles[i].draw();
+  }
   requestAnimationFrame(animate);
 }
 animate();
