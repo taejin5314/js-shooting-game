@@ -46,9 +46,17 @@ class Player {
   constructor(x, y) {
     // distance from the center of planet and player
     this.playerDistance = 50;
-    this.angle = Math.atan((x - canvas.width / 2) / (y - canvas.height / 2)) / 180 * Math.PI;
-    this.x = (radius + this.playerDistance) * Math.cos(this.angle);
-    this.y = (radius + this.playerDistance) * Math.sin(this.angle);
+    this.angle = Math.atan((x - canvas.width / 2) / (y - canvas.height / 2)) * 180 / Math.PI;
+    this.x = (radius + this.playerDistance) * Math.cos(this.angle) + canvas.width / 2;
+    this.y = (radius + this.playerDistance) * Math.sin(this.angle) + canvas.height / 2;
+    this.imageWidth = 343;
+    this.imageHeight = 383;
+  }
+
+  draw() {
+    // ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, this.x, this.y, 50, 60);
+    ctx.fillRect(this.x, this.y, 50, 50);
+    ctx.fill();
   }
 }
 
@@ -65,6 +73,8 @@ let planet = new Planet();
 function animate() {
   planet.draw();
   planet.update();
+  let player = new Player(mouse.x, mouse.y);
+  player.draw();
   requestAnimationFrame(animate);
 }
 animate();
