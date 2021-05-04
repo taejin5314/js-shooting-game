@@ -44,14 +44,17 @@ const mouse = {
 // player
 class Player {
   constructor(x, y) {
+    // distance from the center of planet and player
     this.playerDistance = 50;
-    this.angle =
-      this.x = (radius + this.playerDistance)
+    this.angle = Math.atan((x - canvas.width / 2) / (y - canvas.height / 2)) / 180 * Math.PI;
+    this.x = (radius + this.playerDistance) * Math.cos(this.angle);
+    this.y = (radius + this.playerDistance) * Math.sin(this.angle);
   }
 }
 
-window.addEventListener('mousemove', function () {
-
+window.addEventListener('mousemove', function (e) {
+  mouse.x = e.x;
+  mouse.y = e.y;
 })
 
 // projectiles
