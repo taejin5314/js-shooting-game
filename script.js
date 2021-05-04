@@ -104,10 +104,15 @@ class StartBtn {
     }
   }
 }
-
 let startBtn = new StartBtn();
 
+
 // projectiles
+class Projectile {
+  constructor() {
+
+  }
+}
 // asteroid
 
 
