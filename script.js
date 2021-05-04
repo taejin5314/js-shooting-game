@@ -6,9 +6,13 @@ canvas.width = window.innerWidth;
 const rotateSpeed = 0.1;
 const radius = 100;
 const projectiles = [];
+const asteroid = [];
+
 let player = {
   x: undefined,
   y: undefined,
+  width: 60,
+  height: 75,
   angle: undefined
 };
 let gameStart = false;
@@ -30,13 +34,17 @@ window.addEventListener('click', function (e) {
   console.log(mouse.x, mouse.y);
   // if the game is started, and the player clicked, add the projectile to the array
   if (gameStart) {
-    projectiles.push(new Projectile());
+    projectiles.push(new Projectile(mouse.x, mouse.y));
   }
   // if the cursor clicked the start button
   if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) {
     gameStart = true;
     btnPressed = true;
     document.getElementById('canvas').classList.add('playing');
+    // add random asteroids
+    for (let i = 0; i < 30; i++) {
+      asteroid.push(new Asteroid())
+    }
   }
 })
 
@@ -91,10 +99,10 @@ class Player {
     ctx.translate(canvas.width / 2, canvas.height / 2);
     if (gameStart) {
       ctx.rotate(this.playerAngle);
-      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -30, -60 - radius, 60, 75);
+      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -player.width / 2, -player.height * 4 / 5 - radius, player.width, player.height);
     } else {
       ctx.rotate(0);
-      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -30, -60 - radius, 60, 75);
+      ctx.drawImage(spaceshipImage, 0, 0, this.imageWidth, this.imageHeight, -player.width / 2, -player.height * 4 / 5 - radius, player.width, player.height);
     }
     player.angle = this.playerAngle;
     ctx.restore();
@@ -125,10 +133,13 @@ const projectileImage = new Image();
 projectileImage.src = './projectile.png'
 // projectiles
 class Projectile {
-  constructor() {
+  constructor(x, y) {
     this.x = -25;
-    this.y = -120 - radius;
+    this.y = -100 - radius;
     this.angle = player.angle;
+    this.speed = 20;
+    this.posX = canvas.width / 2 + (radius + player.height / 3 * 2) * Math.sin(this.angle);
+    this.posY = canvas.height / 2 + (radius + player.height / 3 * 2) * Math.cos(this.angle);
   }
   draw() {
     ctx.save();
@@ -138,7 +149,9 @@ class Projectile {
     ctx.restore();
   }
   update() {
-    this.y -= 20;
+    this.y -= this.speed;
+    this.posX += this.speed * Math.sin(this.angle);
+    this.posY += this.speed * Math.cos(this.angle);
   }
 }
 
@@ -146,10 +159,25 @@ class Projectile {
 // asteroid
 class Asteroid {
   constructor() {
-
+    this.angle = (Math.random() * 360) / 180 * Math.PI;
+    // this.angle = Math.PI / 2;
+    this.y = -canvas.height / 2;
+    this.speed = (Math.random() * 2) + 0.5;
+    this.size = (Math.random() * 50) + 25;
+  }
+  draw() {
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(this.angle);
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(canvas.width / 2 - this.size / 2, this.y, this.size, this.size);
+    ctx.restore();
+  }
+  update() {
+    this.y += this.speed;
   }
 }
-
 
 function animate() {
   planet.draw();
@@ -159,10 +187,16 @@ function animate() {
   for (let i = 0; i < projectiles.length; i++) {
     projectiles[i].draw();
     projectiles[i].update();
+    // console.log(projectiles[i].posX, projectiles[i].posY, projectiles[i].angle / Math.PI * 180);
     if (projectiles[i] && projectiles[i].y < -canvas.height * 1.5) {
       projectiles.splice(i, 1);
       i--;
     }
+  }
+  for (let j = 0; j < asteroid.length; j++) {
+    asteroid[j].draw();
+    asteroid[j].update();
+
   }
   requestAnimationFrame(animate);
 }
