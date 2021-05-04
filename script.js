@@ -46,7 +46,7 @@ class Player {
   constructor(x, y) {
     // distance from the center of planet and player
     this.playerDistance = 100;
-    this.playerAngle = Math.atan2((x - canvas.width / 2), -(y - canvas.height / 2));
+    this.playerAngle = Math.atan2((x - canvas.width / 2), -(y - canvas.height / 2)) - Math.PI / 2;
     // this.angle = Math.atan((y - canvas.height / 2) / (x - canvas.width / 2));
     this.x = (radius + this.playerDistance) * Math.cos(this.playerAngle) + canvas.width / 2;
     this.y = (radius + this.playerDistance) * Math.sin(this.playerAngle) + canvas.height / 2;
