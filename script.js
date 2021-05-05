@@ -162,32 +162,32 @@ class Projectile {
 // asteroid
 class Asteroid {
   constructor() {
-    // this.angle = (Math.random() * 360) / 180 * Math.PI;
-    this.angle = Math.PI / 2 * 0;
+    this.angle = (Math.random() * 360) / 180 * Math.PI;
+    // this.angle = Math.PI / 2 * 3;
     this.x = 0;
     this.y = -canvas.height;
-    // this.speed = (Math.random() * 2) + 0.5;
-    this.speed = 10;
+    this.speed = (Math.random() * 2) + 0.5;
+    // this.speed = 10;
     this.size = (Math.random() * 50) + 25;
     this.posX = canvas.width / 2 - this.y * Math.sin(this.angle);
-    this.posY = canvas.height / 2 - this.y * Math.cos(this.angle);
+    this.posY = canvas.height / 2 + this.y * Math.cos(this.angle);
   }
   draw() {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
     ctx.fillStyle = 'blue';
-    ctx.fillRect(0, this.y, this.size, this.size);
+    ctx.fillRect(-this.size / 2, this.y - this.size / 2, this.size, this.size);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
-    ctx.fillStyle = 'red';
-    ctx.fillRect(this.posX, this.posY, this.size, this.size)
     ctx.restore();
+    // ctx.fillStyle = 'red';
+    // ctx.fillRect(this.posX - this.size / 2, this.posY - this.size / 2, this.size, this.size)
   }
   update() {
     if (!gameOver) {
       this.y += this.speed;
       this.posX -= this.speed * Math.sin(this.angle);
-      this.posY -= this.speed * Math.cos(this.angle);
+      this.posY += this.speed * Math.cos(this.angle);
     } else {
       console.log(this.posX, this.posY);
     }
@@ -225,7 +225,7 @@ function animate() {
   for (let j = 0; j < asteroid.length; j++) {
     asteroid[j].draw();
     asteroid[j].update();
-    if (asteroid[j].y + asteroid[j].size > canvas.height / 2 - radius / 6 * 5) {
+    if (asteroid[j].y + asteroid[j].size / 2 > -radius + 20) {
       gameOver = true;
       ctx.clearRect(0, 0, canvas.width, canvas.height)
     }
