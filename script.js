@@ -44,6 +44,7 @@ window.addEventListener('click', function (e) {
     // add random asteroids
     for (let i = 0; i < 1; i++) {
       asteroid.push(new Asteroid())
+      console.log(asteroid[i].angle / Math.PI * 180);
     }
   }
 })
@@ -179,6 +180,10 @@ class Asteroid {
   }
 }
 
+function handleGameStatus() {
+
+}
+
 function animate() {
   planet.draw();
   startBtn.draw();
@@ -201,7 +206,6 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
-console.log(asteroid[0].angle)
 
 // collision detecting function
 function collision(first, second) {
