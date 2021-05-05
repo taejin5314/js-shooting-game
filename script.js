@@ -18,6 +18,8 @@ let player = {
 let gameStart = false;
 let btnPressed = false;
 let btnHover = false;
+let gameOver = false;
+let score = 0;
 
 const planetImage = new Image();
 planetImage.src = './planets/planet_07.png';
@@ -181,7 +183,17 @@ class Asteroid {
 }
 
 function handleGameStatus() {
-
+  ctx.fillStyle = 'black';
+  ctx.font = '40px Orbitron';
+  if (btnPressed && !gameOver) ctx.fillText(score, canvas.width / 2 - 18, canvas.height / 2 + 10)
+  if (gameOver) {
+    ctx.fillStyle = 'black';
+    ctx.font = '90px Orbitron';
+    ctx.fillText('GAME OVER', canvas.width / 2 - 300, canvas.height / 2);
+    ctx.fillStyle = 'white';
+    ctx.font = '40px Orbitron';
+    ctx.fillText('Score: ' + score, canvas.width / 2 - 290, canvas.height / 2 + 50)
+  }
 }
 
 function animate() {
@@ -201,8 +213,12 @@ function animate() {
   for (let j = 0; j < asteroid.length; j++) {
     asteroid[j].draw();
     asteroid[j].update();
-
+    if (asteroid[j].y + asteroid[j].size > canvas.height / 2 - radius / 6 * 5) {
+      gameOver = true;
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
   }
+  handleGameStatus();
   requestAnimationFrame(animate);
 }
 animate();
