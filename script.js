@@ -173,7 +173,6 @@ class Asteroid {
     ctx.fillStyle = 'blue';
     ctx.fillRect(canvas.width / 2 - this.size / 2, this.y, this.size, this.size);
     ctx.restore();
-    console.log(this.angle * 180 / Math.PI)
   }
   update() {
     this.y += this.speed;
@@ -202,6 +201,7 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
+console.log(asteroid[0].angle)
 
 // collision detecting function
 function collision(first, second) {
