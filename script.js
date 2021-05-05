@@ -42,7 +42,7 @@ window.addEventListener('click', function (e) {
     btnPressed = true;
     document.getElementById('canvas').classList.add('playing');
     // add random asteroids
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 1; i++) {
       asteroid.push(new Asteroid())
     }
   }
@@ -173,6 +173,7 @@ class Asteroid {
     ctx.fillStyle = 'blue';
     ctx.fillRect(canvas.width / 2 - this.size / 2, this.y, this.size, this.size);
     ctx.restore();
+    console.log(this.angle * 180 / Math.PI)
   }
   update() {
     this.y += this.speed;
