@@ -164,6 +164,7 @@ class Asteroid {
   constructor() {
     // this.angle = (Math.random() * 360) / 180 * Math.PI;
     this.angle = Math.PI / 2;
+    this.x = 0;
     this.y = -canvas.height / 2;
     this.speed = (Math.random() * 2) + 0.5;
     this.size = (Math.random() * 50) + 25;
@@ -176,14 +177,14 @@ class Asteroid {
     ctx.rotate(this.angle);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
     ctx.fillStyle = 'blue';
-    ctx.fillRect(canvas.width / 2 - this.size / 2, this.y, this.size, this.size);
+    ctx.fillRect(this.posX, this.posY, this.size, this.size);
     ctx.restore();
   }
   update() {
     if (!gameOver) {
       this.y += this.speed;
-      this.posX += this.speed * Math.sin(this.angle);
-      this.posY += this.speed * Math.cos(this.angle);
+      this.posX -= this.speed * Math.sin(this.angle);
+      this.posY -= this.speed * Math.cos(this.angle);
     } else {
       console.log(this.posX, this.posY);
     }
