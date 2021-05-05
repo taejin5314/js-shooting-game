@@ -163,21 +163,24 @@ class Projectile {
 class Asteroid {
   constructor() {
     // this.angle = (Math.random() * 360) / 180 * Math.PI;
-    this.angle = Math.PI / 2;
+    this.angle = Math.PI / 2 * 0;
     this.x = 0;
-    this.y = -canvas.height / 2;
-    this.speed = (Math.random() * 2) + 0.5;
+    this.y = -canvas.height;
+    // this.speed = (Math.random() * 2) + 0.5;
+    this.speed = 10;
     this.size = (Math.random() * 50) + 25;
-    this.posX = canvas.width / 2 + this.y * Math.sin(this.angle);
-    this.posY = canvas.height / 2 + this.y * Math.cos(this.angle);
+    this.posX = canvas.width / 2 - this.y * Math.sin(this.angle);
+    this.posY = canvas.height / 2 - this.y * Math.cos(this.angle);
   }
   draw() {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
-    ctx.translate(-canvas.width / 2, -canvas.height / 2);
     ctx.fillStyle = 'blue';
-    ctx.fillRect(this.posX, this.posY, this.size, this.size);
+    ctx.fillRect(0, this.y, this.size, this.size);
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.posX, this.posY, this.size, this.size)
     ctx.restore();
   }
   update() {
