@@ -215,7 +215,7 @@ function handleProjectiles() {
     projectiles[i].update();
     // console.log(projectiles[i].posX, projectiles[i].posY)
     for (let j = 0; j < asteroid.length; j++) {
-      if (asteroid[j] && collision(projectiles[i], asteroid[j])) {
+      if (!gameOver && projectiles[i] && asteroid[j] && collision(projectiles[i], asteroid[j])) {
         score++;
         asteroid.splice(j, 1);
         projectiles.splice(i, 1);
