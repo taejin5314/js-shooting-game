@@ -158,10 +158,14 @@ class Projectile {
   }
 }
 
-
 // asteroid
 class Asteroid {
   constructor() {
+    this.image = new Image();
+    this.image.src = `./asteroid${Math.floor(Math.random() * 6 + 1)}`
+    this.spriteWidth = 322;
+    this.spriteHeight = 242;
+    this.spritePosition = 0;
     this.angle = (Math.random() * 360) / 180 * Math.PI;
     // this.angle = Math.PI / 2 * 3;
     this.x = 0;
@@ -188,6 +192,9 @@ class Asteroid {
       this.y += this.speed;
       this.posX -= this.speed * Math.sin(this.angle);
       this.posY += this.speed * Math.cos(this.angle);
+      if (frame % 10 === 0) {
+        this.spritePosition++;
+      }
     }
   }
 }
