@@ -141,7 +141,7 @@ class Projectile {
     this.y = -100 - radius;
     this.angle = player.angle;
     this.speed = 20;
-    this.size = 50
+    this.size = 30;
     this.posX = canvas.width / 2 + (radius + player.height / 3 * 2) * Math.sin(this.angle);
     this.posY = canvas.height / 2 - (radius + player.height / 3 * 2) * Math.cos(this.angle);
   }
@@ -152,7 +152,7 @@ class Projectile {
     ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x, this.y, this.size, this.size)
     ctx.restore();
     ctx.fillStyle = 'red';
-    ctx.fillRect(this.posX - 15, this.posY - 15, 30, 30)
+    ctx.fillRect(this.posX - 15, this.posY - 15, this.size, this.size)
   }
   update() {
     this.y -= this.speed;
@@ -191,8 +191,6 @@ class Asteroid {
       this.y += this.speed;
       this.posX -= this.speed * Math.sin(this.angle);
       this.posY += this.speed * Math.cos(this.angle);
-    } else {
-      console.log(this.posX, this.posY);
     }
   }
 }
@@ -217,7 +215,7 @@ function handleProjectiles() {
     projectiles[i].update();
     // console.log(projectiles[i].posX, projectiles[i].posY)
     for (let j = 0; j < asteroid.length; j++) {
-      if (asteroid[j] && projectiles[i] && collision(projectiles[i], asteroid[j])) {
+      if (collision(projectiles[i], asteroid[j])) {
         console.log('boom!')
         // asteroid[j].splice(j, 1);
         // projectiles[i].splice(i, 1);
@@ -239,8 +237,10 @@ function animate() {
   player.draw();
   handleProjectiles();
   for (let j = 0; j < asteroid.length; j++) {
-    asteroid[j].draw();
-    asteroid[j].update();
+    if (asteroid[j]) {
+      asteroid[j].draw();
+      asteroid[j].update();
+    }
     // console.log(asteroid[j].posX, asteroid[j].posY)
     if (asteroid[j].y + asteroid[j].size / 2 > -radius + 20) {
       gameOver = true;
@@ -254,10 +254,11 @@ animate();
 
 // collision detecting function
 function collision(first, second) {
-  const dx = first.posX - second.posY;
-  const dy = first.posY - second.posY;
-  const distance = Math.sqrt(dx * dx + dy * dy);
-  if (distance < first.size + second.size) {
+  if (!(first.posX >= second.posX + second.size ||
+    first.posX + first.size <= second.posX ||
+    first.posY >= second.posY + second.size ||
+    first.posY + first.size <= second.posY)
+  ) {
     return true;
   }
 }
