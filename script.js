@@ -141,6 +141,7 @@ class Projectile {
     this.y = -100 - radius;
     this.angle = player.angle;
     this.speed = 20;
+    this.size = 50
     this.posX = canvas.width / 2 + (radius + player.height / 3 * 2) * Math.sin(this.angle);
     this.posY = canvas.height / 2 + (radius + player.height / 3 * 2) * Math.cos(this.angle);
   }
@@ -148,7 +149,7 @@ class Projectile {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
-    ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x, this.y, 50, 50)
+    ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x, this.y, this.size, this.size)
     ctx.restore();
   }
   update() {
@@ -208,23 +209,37 @@ function handleGameStatus() {
   }
 }
 
-function animate() {
-  planet.draw();
-  startBtn.draw();
-  let player = new Player(mouse.x, mouse.y);
-  player.draw();
+function handleProjectiles() {
   for (let i = 0; i < projectiles.length; i++) {
     projectiles[i].draw();
     projectiles[i].update();
-    // console.log(projectiles[i].posX, projectiles[i].posY, projectiles[i].angle / Math.PI * 180);
+    // console.log(projectiles[i].posX, projectiles[i].posY)
+    for (let j = 0; j < asteroid.length; j++) {
+      if (asteroid[j] && projectiles[i] && collision(projectiles[i], asteroid[j])) {
+        console.log('boom!')
+        // asteroid[j].splice(j, 1);
+        // projectiles[i].splice(i, 1);
+        // j--;
+        // i--;
+      }
+    }
     if (projectiles[i] && projectiles[i].y < -canvas.height * 1.5) {
       projectiles.splice(i, 1);
       i--;
     }
   }
+}
+
+function animate() {
+  planet.draw();
+  startBtn.draw();
+  let player = new Player(mouse.x, mouse.y);
+  player.draw();
+  handleProjectiles();
   for (let j = 0; j < asteroid.length; j++) {
     asteroid[j].draw();
     asteroid[j].update();
+    console.log(asteroid[j].posX, asteroid[j].posY)
     if (asteroid[j].y + asteroid[j].size / 2 > -radius + 20) {
       gameOver = true;
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -237,11 +252,10 @@ animate();
 
 // collision detecting function
 function collision(first, second) {
-  if (!(first.x >= second.x + second.width ||
-    first.x + first.width <= second.x ||
-    first.y >= second.y + second.height ||
-    first.y + first.height <= second.y)
-  ) {
+  if (first.posX < second.posX + second.size / 2 &&
+    first.posX + first.size / 2 > second.posX &&
+    first.posY < second.posY + second.size / 2 &&
+    first.posY + first.size / 2 > second.posY) {
     return true;
   }
 }
