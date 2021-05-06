@@ -162,7 +162,7 @@ class Projectile {
 class Asteroid {
   constructor() {
     this.image = new Image();
-    this.image.src = `./asteroid${Math.floor(Math.random() * 6 + 1)}`
+    this.image.src = `./asteroid${Math.floor(Math.random() * 6 + 1)}.png`
     this.spriteWidth = 322;
     this.spriteHeight = 242;
     this.spritePosition = 0;
@@ -180,8 +180,9 @@ class Asteroid {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
-    ctx.fillStyle = 'blue';
-    ctx.fillRect(-this.size / 2, this.y - this.size / 2, this.size, this.size);
+    // ctx.fillStyle = 'blue';
+    // ctx.fillRect(-this.size / 2, this.y - this.size / 2, this.size, this.size);
+    ctx.drawImage(this.image, this.spritePosition * this.spriteWidth, 0, this.spriteWidth, this.spriteHeight, -this.size / 2, this.y - this.size / 2, this.size, this.size)
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
     ctx.restore();
     // ctx.fillStyle = 'red';
