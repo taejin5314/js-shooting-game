@@ -149,7 +149,7 @@ class Projectile {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
-    ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x, this.y, this.size, this.size)
+    ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x - this.size, this.y - this.size, this.size, this.size)
     ctx.restore();
     // ctx.fillStyle = 'red';
     // ctx.fillRect(this.posX - 15, this.posY - 15, this.size, this.size)
