@@ -193,8 +193,9 @@ class Asteroid {
       this.y += this.speed;
       this.posX -= this.speed * Math.sin(this.angle);
       this.posY += this.speed * Math.cos(this.angle);
-      if (frame % 10 === 0) {
+      if (frame % 5 === 0) {
         this.spritePosition++;
+        if (this.spritePosition > 12) this.spritePosition = 0;
       }
     }
   }
