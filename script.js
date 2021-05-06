@@ -183,7 +183,7 @@ class Asteroid {
     ctx.rotate(this.angle);
     // ctx.fillStyle = 'blue';
     // ctx.fillRect(-this.size / 2, this.y - this.size / 2, this.size, this.size);
-    ctx.drawImage(this.image, this.spritePosition * this.spriteWidth + this.gap * this.spriteWidth / this.spriteHeight, this.gap, this.spriteWidth - this.gap * this.spriteWidth / this.spriteHeight * 2, this.spriteHeight - this.gap * 2, -this.size / 2, this.y - this.size / 2, this.size, this.size)
+    ctx.drawImage(this.image, this.spritePosition * this.spriteWidth + this.gap * this.spriteWidth / this.spriteHeight, this.gap, this.spriteWidth - this.gap * this.spriteWidth / this.spriteHeight * 2, this.spriteHeight - this.gap * 2, -this.size / 2, this.y - this.size / 2 * 0.8, this.size, this.size * 0.8)
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
     ctx.restore();
     // ctx.fillStyle = 'red';
