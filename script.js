@@ -20,6 +20,8 @@ let btnPressed = false;
 let btnHover = false;
 let gameOver = false;
 let score = 0;
+let frame = 0;
+let asteriodsInterval = Math.floor(Math.random() * 50) + 20;;
 
 const planetImage = new Image();
 planetImage.src = './planets/planet_07.png';
@@ -43,11 +45,6 @@ window.addEventListener('click', function (e) {
     gameStart = true;
     btnPressed = true;
     document.getElementById('canvas').classList.add('playing');
-    // add random asteroids
-    for (let i = 0; i < 20; i++) {
-      asteroid.push(new Asteroid())
-      console.log(asteroid[i].angle / Math.PI * 180);
-    }
   }
 })
 
@@ -200,6 +197,7 @@ function handleGameStatus() {
   ctx.font = '40px Orbitron';
   if (btnPressed && !gameOver) ctx.fillText(score, canvas.width / 2 - 18, canvas.height / 2 + 10)
   if (gameOver) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = 'black';
     ctx.font = '90px Orbitron';
     ctx.fillText('GAME OVER', canvas.width / 2 - 300, canvas.height / 2);
@@ -236,6 +234,10 @@ function animate() {
   let player = new Player(mouse.x, mouse.y);
   player.draw();
   handleProjectiles();
+  if (btnPressed && frame % asteriodsInterval === 0) {
+    asteroid.push(new Asteroid());
+    asteriodsInterval = Math.floor(Math.random() * 50) + 20;
+  }
   for (let j = 0; j < asteroid.length; j++) {
     if (asteroid[j]) {
       asteroid[j].draw();
@@ -249,6 +251,7 @@ function animate() {
   }
   handleGameStatus();
   requestAnimationFrame(animate);
+  frame++;
 }
 animate();
 
