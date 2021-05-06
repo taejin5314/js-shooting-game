@@ -143,7 +143,7 @@ class Projectile {
     this.speed = 20;
     this.size = 50
     this.posX = canvas.width / 2 + (radius + player.height / 3 * 2) * Math.sin(this.angle);
-    this.posY = canvas.height / 2 + (radius + player.height / 3 * 2) * Math.cos(this.angle);
+    this.posY = canvas.height / 2 - (radius + player.height / 3 * 2) * Math.cos(this.angle);
   }
   draw() {
     ctx.save();
@@ -151,11 +151,13 @@ class Projectile {
     ctx.rotate(this.angle);
     ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x, this.y, this.size, this.size)
     ctx.restore();
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.posX - 15, this.posY - 15, 30, 30)
   }
   update() {
     this.y -= this.speed;
     this.posX += this.speed * Math.sin(this.angle);
-    this.posY += this.speed * Math.cos(this.angle);
+    this.posY -= this.speed * Math.cos(this.angle);
   }
 }
 
@@ -181,8 +183,8 @@ class Asteroid {
     ctx.fillRect(-this.size / 2, this.y - this.size / 2, this.size, this.size);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
     ctx.restore();
-    // ctx.fillStyle = 'red';
-    // ctx.fillRect(this.posX - this.size / 2, this.posY - this.size / 2, this.size, this.size)
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.posX - this.size / 2, this.posY - this.size / 2, this.size, this.size)
   }
   update() {
     if (!gameOver) {
@@ -239,7 +241,7 @@ function animate() {
   for (let j = 0; j < asteroid.length; j++) {
     asteroid[j].draw();
     asteroid[j].update();
-    console.log(asteroid[j].posX, asteroid[j].posY)
+    // console.log(asteroid[j].posX, asteroid[j].posY)
     if (asteroid[j].y + asteroid[j].size / 2 > -radius + 20) {
       gameOver = true;
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -252,10 +254,10 @@ animate();
 
 // collision detecting function
 function collision(first, second) {
-  if (first.posX < second.posX + second.size / 2 &&
-    first.posX + first.size / 2 > second.posX &&
-    first.posY < second.posY + second.size / 2 &&
-    first.posY + first.size / 2 > second.posY) {
+  const dx = first.posX - second.posY;
+  const dy = first.posY - second.posY;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  if (distance < first.size + second.size) {
     return true;
   }
 }
