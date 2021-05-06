@@ -44,7 +44,7 @@ window.addEventListener('click', function (e) {
     btnPressed = true;
     document.getElementById('canvas').classList.add('playing');
     // add random asteroids
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 20; i++) {
       asteroid.push(new Asteroid())
       console.log(asteroid[i].angle / Math.PI * 180);
     }
@@ -151,8 +151,8 @@ class Projectile {
     ctx.rotate(this.angle);
     ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x, this.y, this.size, this.size)
     ctx.restore();
-    ctx.fillStyle = 'red';
-    ctx.fillRect(this.posX - 15, this.posY - 15, this.size, this.size)
+    // ctx.fillStyle = 'red';
+    // ctx.fillRect(this.posX - 15, this.posY - 15, this.size, this.size)
   }
   update() {
     this.y -= this.speed;
@@ -183,8 +183,8 @@ class Asteroid {
     ctx.fillRect(-this.size / 2, this.y - this.size / 2, this.size, this.size);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
     ctx.restore();
-    ctx.fillStyle = 'red';
-    ctx.fillRect(this.posX - this.size / 2, this.posY - this.size / 2, this.size, this.size)
+    // ctx.fillStyle = 'red';
+    // ctx.fillRect(this.posX - this.size / 2, this.posY - this.size / 2, this.size, this.size)
   }
   update() {
     if (!gameOver) {
@@ -215,12 +215,12 @@ function handleProjectiles() {
     projectiles[i].update();
     // console.log(projectiles[i].posX, projectiles[i].posY)
     for (let j = 0; j < asteroid.length; j++) {
-      if (collision(projectiles[i], asteroid[j])) {
-        console.log('boom!')
-        // asteroid[j].splice(j, 1);
-        // projectiles[i].splice(i, 1);
-        // j--;
-        // i--;
+      if (asteroid[j] && collision(projectiles[i], asteroid[j])) {
+        score++;
+        asteroid.splice(j, 1);
+        projectiles.splice(i, 1);
+        j--;
+        i--;
       }
     }
     if (projectiles[i] && projectiles[i].y < -canvas.height * 1.5) {
@@ -254,7 +254,7 @@ animate();
 
 // collision detecting function
 function collision(first, second) {
-  if (!(first.posX >= second.posX + second.size ||
+  if (first && second && !(first.posX >= second.posX + second.size ||
     first.posX + first.size <= second.posX ||
     first.posY >= second.posY + second.size ||
     first.posY + first.size <= second.posY)
