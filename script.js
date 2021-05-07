@@ -36,7 +36,7 @@ window.addEventListener('resize', function () {
 })
 
 window.addEventListener('click', function (e) {
-  console.log(mouse.x, mouse.y);
+  // console.log(mouse.x, mouse.y);
   // if the game is started, and the player clicked, add the projectile to the array
   if (gameStart) {
     projectiles.push(new Projectile(mouse.x, mouse.y));
@@ -208,6 +208,7 @@ function handleGameStatus() {
   ctx.font = '40px Orbitron';
   if (btnPressed && !gameOver) ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 15)
   if (gameOver) {
+    document.getElementById('canvas').classList.remove('playing')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = 'black';
     ctx.font = '90px Orbitron';
