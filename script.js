@@ -7,6 +7,7 @@ const rotateSpeed = 0.1;
 const radius = 100;
 const projectiles = [];
 const asteroid = [];
+const booms = [];
 
 let player = {
   x: undefined,
@@ -225,7 +226,7 @@ function handleProjectiles() {
     for (let j = 0; j < asteroid.length; j++) {
       if (!gameOver && projectiles[i] && asteroid[j] && collision(projectiles[i], asteroid[j])) {
         score++;
-        handleBoom(asteroid[j].posX, asteroid[j].posY, asteroid[j].size);
+        booms.push(new Boom(asteroid[j].posX, asteroid[j].posY, asteroid[j].size))
         asteroid.splice(j, 1);
         projectiles.splice(i, 1);
         j--;
@@ -241,11 +242,25 @@ function handleProjectiles() {
 
 const boomImage = new Image();
 boomImage.src = './explosion.png'
-function handleBoom(x, y, size) {
-  const boomSize = 256;
-  for (i = frame; i < frame + 64; i++) {
-    if (i % 4 === 0) {
-      ctx.drawImage()
+class Boom {
+  constructor(x, y, size) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.spriteWidth = 256;
+    this.spriteHeight = 256;
+    this.spriteX = 0;
+    this.spriteY = 0;
+  }
+
+  draw() {
+    ctx.drawImage(boomImage, this.spriteX * this.spriteWidth, this.spriteY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - this.size / 2, this.y - this.size / 2, this.size, this.size)
+    if (frame % 4 === 0) {
+      this.spriteX++;
+      if (this.spriteX % 4 === 0) {
+        this.spriteX -= 4;
+        this.spriteY++;
+      }
     }
   }
 }
@@ -272,6 +287,15 @@ function animate() {
     }
   }
   handleGameStatus();
+  if (booms) {
+    for (let i = 0; i < booms.length; i++) {
+      if (booms[i].spriteY < 4) booms[i].draw();
+      else {
+        booms.splice(i, 1);
+        i--;
+      }
+    }
+  }
   requestAnimationFrame(animate);
   frame++;
 }
