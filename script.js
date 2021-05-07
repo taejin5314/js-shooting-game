@@ -240,9 +240,10 @@ function handleProjectiles() {
 }
 
 const boomImage = new Image();
-
+boomImage.src = './explosion.png'
 function handleBoom(x, y, size) {
-  for (i = frame; i < frame + 40; i++) {
+  const boomSize = 256;
+  for (i = frame; i < frame + 64; i++) {
     if (i % 4 === 0) {
       ctx.drawImage()
     }
