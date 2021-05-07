@@ -240,10 +240,10 @@ function handleProjectiles() {
   }
 }
 
-const boomImage = new Image();
-boomImage.src = './explosion.png'
 class Boom {
   constructor(x, y, size) {
+    this.image = new Image();
+    this.image.src = `./.png`;
     this.x = x;
     this.y = y;
     this.size = size;
