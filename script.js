@@ -225,6 +225,7 @@ function handleProjectiles() {
     for (let j = 0; j < asteroid.length; j++) {
       if (!gameOver && projectiles[i] && asteroid[j] && collision(projectiles[i], asteroid[j])) {
         score++;
+        handleBoom(asteroid[j].posX, asteroid[j].posY, asteroid[j].size);
         asteroid.splice(j, 1);
         projectiles.splice(i, 1);
         j--;
@@ -234,6 +235,16 @@ function handleProjectiles() {
     if (projectiles[i] && projectiles[i].y < -canvas.height * 1.5) {
       projectiles.splice(i, 1);
       i--;
+    }
+  }
+}
+
+const boomImage = new Image();
+
+function handleBoom(x, y, size) {
+  for (i = frame; i < frame + 40; i++) {
+    if (i % 4 === 0) {
+      ctx.drawImage()
     }
   }
 }
