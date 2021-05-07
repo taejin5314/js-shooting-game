@@ -243,7 +243,7 @@ function handleProjectiles() {
 class Boom {
   constructor(x, y, size) {
     this.image = new Image();
-    this.image.src = `./.png`;
+    this.image.src = `./explosion${Math.floor(Math.random() * 3) + 1}.png`;
     this.x = x;
     this.y = y;
     this.size = size;
@@ -254,7 +254,7 @@ class Boom {
   }
 
   draw() {
-    ctx.drawImage(boomImage, this.spriteX * this.spriteWidth, this.spriteY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - this.size / 2, this.y - this.size / 2, this.size, this.size)
+    ctx.drawImage(this.image, this.spriteX * this.spriteWidth, this.spriteY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x - this.size / 2, this.y - this.size / 2, this.size, this.size)
     if (frame % 4 === 0) {
       this.spriteX++;
       if (this.spriteX % 4 === 0) {
