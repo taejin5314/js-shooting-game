@@ -206,7 +206,7 @@ class Asteroid {
 function handleGameStatus() {
   ctx.fillStyle = 'black';
   ctx.font = '40px Orbitron';
-  if (btnPressed && !gameOver) ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 10)
+  if (btnPressed && !gameOver) ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 15)
   if (gameOver) {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = 'black';
@@ -240,6 +240,7 @@ function handleProjectiles() {
   }
 }
 
+// explosion effect
 class Boom {
   constructor(x, y, size) {
     this.image = new Image();
