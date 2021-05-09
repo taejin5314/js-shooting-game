@@ -23,6 +23,7 @@ let gameOver = false;
 let score = 0;
 let frame = 0;
 let asteriodsInterval = Math.floor(Math.random() * 50) + 20;;
+let level = 1;
 
 const planetImage = new Image();
 planetImage.src = './planets/planet_07.png';
@@ -206,7 +207,11 @@ class Asteroid {
 function handleGameStatus() {
   ctx.fillStyle = 'black';
   ctx.font = '40px Orbitron';
-  if (btnPressed && !gameOver) ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 15)
+  if (btnPressed && !gameOver) {
+    ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 15)
+    ctx.fillStyle = 'white';
+    ctx.fillText('Level: ' + level, 20, 40)
+  }
   if (gameOver) {
     document.getElementById('canvas').classList.remove('playing')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
