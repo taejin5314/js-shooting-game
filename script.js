@@ -227,7 +227,7 @@ function handleProjectiles() {
     for (let j = 0; j < asteroid.length; j++) {
       if (!gameOver && projectiles[i] && asteroid[j] && collision(projectiles[i], asteroid[j])) {
         score++;
-        booms.push(new Boom(asteroid[j].posX, asteroid[j].posY, asteroid[j].size))
+        booms.push(new Boom(asteroid[j].posX, asteroid[j].posY, asteroid[j].size * 1.5))
         asteroid.splice(j, 1);
         projectiles.splice(i, 1);
         j--;
