@@ -220,7 +220,7 @@ function handleGameStatus() {
     ctx.fillText('GAME OVER', canvas.width / 2 - 300, canvas.height / 2);
     ctx.fillStyle = 'white';
     ctx.font = '40px Orbitron';
-    ctx.fillText('Score: ' + score, canvas.width / 2 - 290, canvas.height / 2 + 50)
+    ctx.fillText('Score: ' + score + '  Level: ' + level, canvas.width / 2 - 290, canvas.height / 2 + 50)
   }
 }
 
