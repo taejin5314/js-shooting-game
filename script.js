@@ -292,7 +292,7 @@ function handleProjectiles() {
 function handleLaser() {
   if (laser) laser.draw();
   for (let i = 0; i < asteroid.length; i++) {
-    if (!gameOver && laser && asteroid[i] && collision(laser, asteroid[i])) {
+    if (!gameOver && laser && asteroid[i] && Math.floor(player.angle) === Math.floor(asteroid[i].angle)) {
       score++;
       booms.push(new Boom(asteroid[i].posX, asteroid[i].posY, asteroid[i].size * 1.5))
       asteroid.splice(i, 1);
