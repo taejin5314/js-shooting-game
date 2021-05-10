@@ -22,6 +22,7 @@ let btnHover = false;
 let gameOver = false;
 let score = 0;
 let frame = 0;
+let laser;
 let asteriodsInterval = Math.floor(Math.random() * 50) + 20;;
 let level = 1;
 
@@ -37,14 +38,18 @@ window.addEventListener('resize', function () {
 })
 
 window.addEventListener('mousedown', function (e) {
-  console.log('mousedown', e.clientX, e.clientY);
+  // console.log('mousedown', e.clientX, e.clientY);
   if (gameStart && level > 1) {
-
+    laser = new LaserBeam(e.clientX, e.clientY);
+    console.log(laser);
   }
 })
 
 window.addEventListener('mouseup', function (e) {
-  console.log('mouseup', e.clientX, e.clientY)
+  // console.log('mouseup', e.clientX, e.clientY)
+  if (gameStart && level > 1) {
+    laser = undefined;
+  }
 })
 
 window.addEventListener('click', function (e) {
@@ -160,7 +165,7 @@ class Projectile {
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
-    if (level === 1) ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x + this.size / 3, this.y, this.size, this.size)
+    ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x + this.size / 3, this.y, this.size, this.size)
     ctx.restore();
     // ctx.fillStyle = 'red';
     // ctx.fillRect(this.posX - 15, this.posY - 15, this.size, this.size)
@@ -183,7 +188,13 @@ class LaserBeam {
     this.posY = canvas.height / 2 - (radius + player.height / 3 * 2) * Math.cos(this.angle);
   }
   draw() {
-
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(this.angle);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(this.x + this.size / 3, this.y, this.size, canvas.height)
+    // ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x + this.size / 3, this.y, this.size, this.size)
+    ctx.restore();
   }
 }
 
@@ -234,6 +245,7 @@ class Asteroid {
 function handleGameStatus() {
   ctx.fillStyle = 'black';
   ctx.font = '40px Orbitron';
+  if (score > 1) level = 2;
   if (btnPressed && !gameOver) {
     ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 15)
     ctx.fillStyle = 'white';
@@ -273,6 +285,10 @@ function handleProjectiles() {
   }
 }
 
+function handleLaser() {
+  if (laser) laser.draw();
+}
+
 // explosion effect
 class Boom {
   constructor(x, y, size) {
@@ -304,7 +320,8 @@ function animate() {
   startBtn.draw();
   let player = new Player(mouse.x, mouse.y);
   player.draw();
-  handleProjectiles();
+  if (level === 1) handleProjectiles();
+  else if (level > 1) handleLaser();
   if (btnPressed && frame % asteriodsInterval === 0) {
     asteroid.push(new Asteroid());
     asteriodsInterval = Math.floor(Math.random() * 50) + 20;
