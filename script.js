@@ -23,6 +23,7 @@ let gameOver = false;
 let score = 0;
 let frame = 0;
 let laser;
+let laserToggle = false;
 let asteriodsInterval = Math.floor(Math.random() * 50) + 20;;
 let level = 1;
 
@@ -38,18 +39,13 @@ window.addEventListener('resize', function () {
 })
 
 window.addEventListener('mousedown', function (e) {
-  // console.log('mousedown', e.clientX, e.clientY);
-  if (gameStart && level > 1) {
-    laser = new LaserBeam(e.clientX, e.clientY);
-    console.log(laser);
-  }
+  if (gameStart && level > 1) laserToggle = true;
+
 })
 
 window.addEventListener('mouseup', function (e) {
-  // console.log('mouseup', e.clientX, e.clientY)
-  if (gameStart && level > 1) {
-    laser = undefined;
-  }
+  if (gameStart && level > 1) laserToggle = false;
+
 })
 
 window.addEventListener('click', function (e) {
@@ -72,6 +68,8 @@ window.addEventListener('mousemove', function (e) {
   // if the cursor is on the start button
   if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) btnHover = true;
   else btnHover = false;
+  if (gameStart && level > 1 && laserToggle) laser = new LaserBeam(mouse.x, mouse.y);
+  else if (gameStart && !laserToggle) laser = undefined;
 })
 
 // planet
@@ -158,6 +156,8 @@ class Projectile {
     this.angle = player.angle;
     this.speed = 20;
     this.size = 30;
+    this.width = 30;
+    this.height = 30;
     this.posX = canvas.width / 2 + (radius + player.height / 3 * 2) * Math.sin(this.angle);
     this.posY = canvas.height / 2 - (radius + player.height / 3 * 2) * Math.cos(this.angle);
   }
@@ -184,6 +184,8 @@ class LaserBeam {
     this.y = -100 - radius;
     this.angle = player.angle;
     this.size = 30;
+    this.width = 30;
+    this.height = canvas.height;
     this.posX = canvas.width / 2 + (radius + player.height / 3 * 2) * Math.sin(this.angle);
     this.posY = canvas.height / 2 - (radius + player.height / 3 * 2) * Math.cos(this.angle);
   }
@@ -192,7 +194,7 @@ class LaserBeam {
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
     ctx.fillStyle = 'red';
-    ctx.fillRect(this.x + this.size / 3, this.y, this.size, canvas.height)
+    ctx.fillRect(this.x + this.size / 3, this.y + this.size * 1.3, this.size, -canvas.height)
     // ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x + this.size / 3, this.y, this.size, this.size)
     ctx.restore();
   }
@@ -214,6 +216,8 @@ class Asteroid {
     this.speed = (Math.random() * 1.5) + 0.5;
     // this.speed = 10;
     this.size = (Math.random() * 50) + 100;
+    this.width = this.size;
+    this.height = this.size;
     this.posX = canvas.width / 2 - this.y * Math.sin(this.angle);
     this.posY = canvas.height / 2 + this.y * Math.cos(this.angle);
   }
@@ -287,6 +291,14 @@ function handleProjectiles() {
 
 function handleLaser() {
   if (laser) laser.draw();
+  for (let i = 0; i < asteroid.length; i++) {
+    if (!gameOver && laser && asteroid[i] && collision(laser, asteroid[i])) {
+      score++;
+      booms.push(new Boom(asteroid[i].posX, asteroid[i].posY, asteroid[i].size * 1.5))
+      asteroid.splice(i, 1);
+      i--;
+    }
+  }
 }
 
 // explosion effect
@@ -354,10 +366,10 @@ animate();
 
 // collision detecting function
 function collision(first, second) {
-  if (first && second && !(first.posX >= second.posX + second.size ||
-    first.posX + first.size <= second.posX ||
-    first.posY >= second.posY + second.size ||
-    first.posY + first.size <= second.posY)
+  if (first && second && !(first.posX >= second.posX + second.width ||
+    first.posX + first.width <= second.posX ||
+    first.posY >= second.posY + second.height ||
+    first.posY + first.height <= second.posY)
   ) {
     return true;
   }
