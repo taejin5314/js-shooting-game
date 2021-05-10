@@ -70,7 +70,7 @@ window.addEventListener('mousemove', function (e) {
   else btnHover = false;
   if (gameStart && level > 1 && laserToggle) laser = new LaserBeam(mouse.x, mouse.y);
   else if (gameStart && !laserToggle) laser = undefined;
-  if (btnPressed && !gameOver) console.log(player.angle)
+  // if (btnPressed && !gameOver) console.log(Math.PI * 2 + player.angle)
 })
 
 // planet
@@ -293,7 +293,7 @@ function handleProjectiles() {
 function handleLaser() {
   if (laser) laser.draw();
   for (let i = 0; i < asteroid.length; i++) {
-    if (!gameOver && laser && asteroid[i] && Math.floor(player.angle) === Math.floor(asteroid[i].angle) || Math.PI * 2 + Math.floor(player.angle) === Math.floor(asteroid[i].angle)) {
+    if (!gameOver && laser && asteroid[i] && (player.angle.toFixed(1) === asteroid[i].angle.toFixed(1) || (Math.PI * 2 + player.angle).toFixed(1) === asteroid[i].angle.toFixed(1))) {
       score++;
       booms.push(new Boom(asteroid[i].posX, asteroid[i].posY, asteroid[i].size * 1.5))
       asteroid.splice(i, 1);
