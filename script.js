@@ -36,10 +36,21 @@ window.addEventListener('resize', function () {
   canvas.height = window.innerHeight;
 })
 
+window.addEventListener('mousedown', function (e) {
+  console.log('mousedown', e.clientX, e.clientY);
+  if (gameStart && level > 1) {
+
+  }
+})
+
+window.addEventListener('mouseup', function (e) {
+  console.log('mouseup', e.clientX, e.clientY)
+})
+
 window.addEventListener('click', function (e) {
   // console.log(mouse.x, mouse.y);
   // if the game is started, and the player clicked, add the projectile to the array
-  if (gameStart) {
+  if (gameStart && level === 1) {
     projectiles.push(new Projectile(mouse.x, mouse.y));
   }
   // if the cursor clicked the start button
@@ -117,6 +128,7 @@ const startBtnImage = {
 }
 startBtnImage.default.src = './play.png';
 startBtnImage.hover.src = './play-pressed.png';
+
 // start button
 class StartBtn {
   constructor() {
@@ -157,6 +169,21 @@ class Projectile {
     this.y -= this.speed;
     this.posX += this.speed * Math.sin(this.angle);
     this.posY -= this.speed * Math.cos(this.angle);
+  }
+}
+
+// Laser Beam
+class LaserBeam {
+  constructor(x, y) {
+    this.x = -25;
+    this.y = -100 - radius;
+    this.angle = player.angle;
+    this.size = 30;
+    this.posX = canvas.width / 2 + (radius + player.height / 3 * 2) * Math.sin(this.angle);
+    this.posY = canvas.height / 2 - (radius + player.height / 3 * 2) * Math.cos(this.angle);
+  }
+  draw() {
+
   }
 }
 
