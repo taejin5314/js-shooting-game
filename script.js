@@ -199,8 +199,8 @@ class LaserBeam {
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
     ctx.fillStyle = 'red';
-    ctx.drawImage(this.image, 0, 0, this.imageWidth, this.imageHeight, this.x + this.size / 3, this.y + this.size * 1.3, this.imageWidth, -this.imageHeight);
     ctx.fillRect(this.x + this.size / 3, this.y + this.size * 1.3, this.size, -canvas.height)
+    ctx.drawImage(this.image, 0, 0, this.imageWidth, this.imageHeight, this.x - this.size * 0.77, this.y + this.size * 1.3, this.imageWidth * 1.5, -this.imageHeight);
     ctx.restore();
   }
 }
