@@ -205,7 +205,7 @@ class LaserBeam {
     ctx.restore();
   }
   update() {
-    if (frame % 5 === 0) this.spriteX++;
+    if (frame % 4 === 0) this.spriteX++;
     if (this.spriteX >= 8) this.spriteX = 0;
   }
 }
