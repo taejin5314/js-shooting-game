@@ -181,6 +181,10 @@ class Projectile {
 // Laser Beam
 class LaserBeam {
   constructor(x, y) {
+    this.image = new Image();
+    this.image.src = './laser.png';
+    this.imageWidth = 66;
+    this.imageHeight = 66;
     this.x = -25;
     this.y = -100 - radius;
     this.angle = player.angle;
@@ -195,8 +199,8 @@ class LaserBeam {
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(this.angle);
     ctx.fillStyle = 'red';
+    ctx.drawImage(this.image, 0, 0, this.imageWidth, this.imageHeight, this.x + this.size / 3, this.y + this.size * 1.3, this.imageWidth, -this.imageHeight);
     ctx.fillRect(this.x + this.size / 3, this.y + this.size * 1.3, this.size, -canvas.height)
-    // ctx.drawImage(projectileImage, 0, 32, 32, 32, this.x + this.size / 3, this.y, this.size, this.size)
     ctx.restore();
   }
 }
