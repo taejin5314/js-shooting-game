@@ -25,6 +25,7 @@ let score = 0;
 let frame = 0;
 let laser;
 let laserToggle = false;
+let autoMissile = false;
 let asteriodsInterval = Math.floor(Math.random() * 50) + 20;;
 let level = 1;
 
@@ -40,19 +41,19 @@ window.addEventListener('resize', function () {
 })
 
 window.addEventListener('mousedown', function (e) {
-  if (gameStart && level > 1) laserToggle = true;
-
+  if (gameStart && level === 3) laserToggle = true;
+  else if (gameStart && level === 2) autoMissile = true;
 })
 
 window.addEventListener('mouseup', function (e) {
-  if (gameStart && level > 1) laserToggle = false;
-
+  if (gameStart && level === 3) laserToggle = false;
+  else if (gameStart && level === 2) autoMissile = false;
 })
 
 window.addEventListener('click', function (e) {
   // console.log(mouse.x, mouse.y);
   // if the game is started, and the player clicked, add the projectile to the array
-  if (gameStart && level === 1) {
+  if (gameStart && (level === 1 || level === 2)) {
     projectiles.push(new Projectile(mouse.x, mouse.y));
   }
   // if the cursor clicked the start button
@@ -69,7 +70,8 @@ window.addEventListener('mousemove', function (e) {
   // if the cursor is on the start button
   if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) btnHover = true;
   else btnHover = false;
-  if (gameStart && level > 1 && laserToggle) laser = new LaserBeam(mouse.x, mouse.y);
+  if (frame % 2 === 0 && gameStart && level === 2 && autoMissile) projectiles.push(new Projectile(mouse.x, mouse.y));
+  else if (gameStart && level === 3 && laserToggle) laser = new LaserBeam(mouse.x, mouse.y);
   else if (gameStart && !laserToggle) laser = undefined;
   // if (btnPressed && !gameOver) console.log(Math.PI * 2 + player.angle)
 })
@@ -262,7 +264,8 @@ class Asteroid {
 function handleGameStatus() {
   ctx.fillStyle = 'black';
   ctx.font = '40px Orbitron';
-  if (score > 1) level = 2;
+  if (score > 25 && score < 100) level = 2;
+  else if (score >= 100) level = 3;
   if (btnPressed && !gameOver) {
     ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 15)
     ctx.fillStyle = 'white';
@@ -348,8 +351,8 @@ function animate() {
   startBtn.draw();
   let player = new Player(mouse.x, mouse.y);
   player.draw();
-  if (level === 1) handleProjectiles();
-  else if (level > 1) handleLaser();
+  if (level === 1 || level === 2) handleProjectiles();
+  else if (level === 3) handleLaser();
   if (btnPressed && frame % asteriodsInterval === 0) {
     asteroid.push(new Asteroid());
     asteriodsInterval = Math.floor(Math.random() * 50) + 20;
