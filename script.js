@@ -273,13 +273,20 @@ function handleGameStatus() {
     level = 2;
     forNextLevel = 100 - score;
   }
-  else if (score >= 100) level = 3;
+  else if (score >= 100) {
+    level = 3;
+    forNextLevel = -1;
+  }
   if (btnPressed && !gameOver) {
     ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 15)
     ctx.fillStyle = 'white';
     ctx.fillText('Level: ' + level, 20, 40)
     if (forNextLevel >= 0) {
-      ctx.fillText('For next Level: ' + forNextLevel, 80, 40)
+      ctx.font = '30px Orbitron'
+      ctx.fillText('For next Level: ' + forNextLevel, 250, 40)
+    } else {
+      ctx.font = '30px Orbitron';
+      ctx.fillText('Max Level!', 250, 40);
     }
   }
   if (gameOver) {
