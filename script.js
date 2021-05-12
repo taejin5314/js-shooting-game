@@ -202,9 +202,9 @@ class LaserBeam {
     ctx.fillStyle = 'red';
     ctx.fillRect(this.x + this.size / 3, this.y + this.size * 1.3, this.size, -canvas.height)
     ctx.drawImage(this.image, laserSpriteX * this.imageWidth, 0, this.imageWidth, this.imageHeight, this.x - this.size * 0.77, this.y + this.size * 1.3, this.imageWidth * 1.5, -this.imageHeight);
-    for (let i = 1; i < Math.round(canvas.height / this.imageHeight) + 1; i++) {
-      ctx.drawImage(this.image, laserSpriteX * this.imageWidth, 0, this.imageWidth, this.imageHeight - 12, this.x - this.size * 0.77, this.y + this.size * 1.3 - i * (this.height - 12), this.imageWidth * 1.5, -(this.imageHeight - 12));
-    }
+    ctx.drawImage(this.image, laserSpriteX * this.imageWidth, 0, this.imageWidth, this.imageHeight - 12, this.x - this.size * 0.77, this.y + this.size * 1.3 - 1 * (this.height - 12), this.imageWidth * 1.5, -(this.imageHeight - 12));
+    // for (let i = 1; i < Math.round(canvas.height / this.imageHeight) + 1; i++) {
+    // }
     ctx.restore();
   }
   update() {
