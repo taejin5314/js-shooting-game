@@ -205,7 +205,7 @@ class LaserBeam {
     // draw the initial part of laser beam
     ctx.drawImage(this.image, laserSpriteX * this.imageWidth, 0, this.imageWidth, this.imageHeight, this.x - this.size * 0.77, this.y + this.size * 1.3, this.imageWidth * 1.5, -this.imageHeight);
     // draw the extended laser beam
-    for (let i = 1; i < Math.round(canvas.height / this.imageHeight) + 1; i++) {
+    for (let i = 1; i < Math.round(canvas.height / (this.imageHeight - 15)); i++) {
       ctx.drawImage(this.image, laserSpriteX * this.imageWidth, 0, this.imageWidth, this.imageHeight - 15, this.x - this.size * 0.77, this.y + this.size * 1.3 - i * (this.imageHeight - 15), this.imageWidth * 1.5, -(this.imageHeight - 13));
     }
     ctx.restore();
