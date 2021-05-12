@@ -16,6 +16,7 @@ let player = {
   height: 75,
   angle: undefined
 };
+let laserSpriteX = 0;
 let gameStart = false;
 let btnPressed = false;
 let btnHover = false;
@@ -185,7 +186,6 @@ class LaserBeam {
     this.image.src = './laser.png';
     this.imageWidth = 66;
     this.imageHeight = 66;
-    this.spriteX = 0;
     this.x = -25;
     this.y = -100 - radius;
     this.angle = player.angle;
@@ -201,12 +201,15 @@ class LaserBeam {
     ctx.rotate(this.angle);
     ctx.fillStyle = 'red';
     ctx.fillRect(this.x + this.size / 3, this.y + this.size * 1.3, this.size, -canvas.height)
-    ctx.drawImage(this.image, this.spriteX * this.imageWidth, 0, this.imageWidth, this.imageHeight, this.x - this.size * 0.77, this.y + this.size * 1.3, this.imageWidth * 1.5, -this.imageHeight);
+    ctx.drawImage(this.image, laserSpriteX * this.imageWidth, 0, this.imageWidth, this.imageHeight, this.x - this.size * 0.77, this.y + this.size * 1.3, this.imageWidth * 1.5, -this.imageHeight);
+    for (let i = 1; i < Math.round(canvas.height / this.imageHeight) + 1; i++) {
+      ctx.drawImage(this.image, laserSpriteX * this.imageWidth, 0, this.imageWidth, this.imageHeight - 12, this.x - this.size * 0.77, this.y + this.size * 1.3 - i * (this.height - 12), this.imageWidth * 1.5, -(this.imageHeight - 12));
+    }
     ctx.restore();
   }
   update() {
-    if (frame % 4 === 0) this.spriteX++;
-    if (this.spriteX >= 8) this.spriteX = 0;
+    if (frame % 4 === 0) laserSpriteX++;
+    if (laserSpriteX >= 8) laserSpriteX = 0;
   }
 }
 
