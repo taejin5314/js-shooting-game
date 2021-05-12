@@ -89,7 +89,7 @@ class Planet {
   // draw rotating planet.
   draw() {
     ctx.save();
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate((this.deg += rotateSpeed) * (Math.PI / 180));
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
