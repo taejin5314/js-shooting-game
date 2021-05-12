@@ -297,7 +297,7 @@ function handleGameStatus() {
     ctx.fillText('GAME OVER', canvas.width / 2 - 300, canvas.height / 2);
     ctx.fillStyle = 'white';
     ctx.font = '40px Orbitron';
-    ctx.fillText('Score: ' + score + '  Level: ' + level, canvas.width / 2 - 290, canvas.height / 2 + 50)
+    ctx.fillText('Score: ' + score + '  Level: ' + level, canvas.width / 2 - 290, canvas.height / 2 + 50);
   }
 }
 
@@ -383,7 +383,7 @@ function animate() {
     // console.log(asteroid[j].posX, asteroid[j].posY)
     if (asteroid[j].y + asteroid[j].size / 2 > -radius + 20) {
       gameOver = true;
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
   }
   handleGameStatus();
