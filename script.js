@@ -144,8 +144,8 @@ class StartBtn {
   }
   draw() {
     if (!btnPressed) {
-      if (btnHover) ctx.drawImage(startBtnImage.hover, 0, 0, 49, 20, canvas.width / 2 - 40, canvas.height / 2 - 16, 80, 32)
-      else ctx.drawImage(startBtnImage.default, 0, 0, 49, 20, canvas.width / 2 - 40, canvas.height / 2 - 16, 80, 32)
+      if (btnHover) ctx.drawImage(startBtnImage.hover, 0, 0, 49, 20, canvas.width / 2 - 40, canvas.height / 2 - 16, 80, 32);
+      else ctx.drawImage(startBtnImage.default, 0, 0, 49, 20, canvas.width / 2 - 40, canvas.height / 2 - 16, 80, 32);
     }
   }
 }
