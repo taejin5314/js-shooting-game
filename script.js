@@ -21,6 +21,7 @@ let gameStart = false;
 let btnPressed = false;
 let btnHover = false;
 let gameOver = false;
+let forNextLevel = 0;
 let score = 0;
 let frame = 0;
 let laser;
@@ -264,12 +265,22 @@ class Asteroid {
 function handleGameStatus() {
   ctx.fillStyle = 'black';
   ctx.font = '40px Orbitron';
-  if (score > 25 && score < 100) level = 2;
+  if (score <= 25) {
+    level = 1;
+    forNextLevel = 25 - score;
+  }
+  else if (score > 25 && score < 100) {
+    level = 2;
+    forNextLevel = 100 - score;
+  }
   else if (score >= 100) level = 3;
   if (btnPressed && !gameOver) {
     ctx.fillText(score, canvas.width / 2 - score.toString().length * 15, canvas.height / 2 + 15)
     ctx.fillStyle = 'white';
     ctx.fillText('Level: ' + level, 20, 40)
+    if (forNextLevel >= 0) {
+      ctx.fillText('For next Level: ' + forNextLevel, 80, 40)
+    }
   }
   if (gameOver) {
     document.getElementById('canvas').classList.remove('playing')
