@@ -70,7 +70,7 @@ window.addEventListener('mousemove', function (e) {
   // if the cursor is on the start button
   if (!gameStart && mouse.x > canvas.width / 2 - 40 && mouse.x < canvas.width / 2 + 40 && mouse.y > canvas.height / 2 - 16 && mouse.y < canvas.height / 2 + 16) btnHover = true;
   else btnHover = false;
-  if (frame % 2 === 0 && gameStart && level === 2 && autoMissile) projectiles.push(new Projectile(mouse.x, mouse.y));
+  if (frame % 4 === 0 && gameStart && level === 2 && autoMissile) projectiles.push(new Projectile(mouse.x, mouse.y));
   else if (gameStart && level === 3 && laserToggle) laser = new LaserBeam(mouse.x, mouse.y);
   else if (gameStart && !laserToggle) laser = undefined;
   // if (btnPressed && !gameOver) console.log(Math.PI * 2 + player.angle)
