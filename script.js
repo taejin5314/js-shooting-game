@@ -411,3 +411,8 @@ function collision(first, second) {
     return true;
   }
 }
+
+window.addEventListener('resize', function () {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+})
