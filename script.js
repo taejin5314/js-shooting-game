@@ -397,7 +397,7 @@ function animate() {
     }
   }
   requestAnimationFrame(animate);
-  frame++;
+  frame++
 }
 animate();
 
