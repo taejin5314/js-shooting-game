@@ -1,6 +1,6 @@
 # js-shooting-game
 
-Creating shooting game with java script.
+Creating spaceship shooting game with vanilla javascript and canvas.
 
 ## Homepage
 
@@ -14,4 +14,6 @@ Creating shooting game with java script.
 
 ![over](https://github.com/taejin5314/js-shooting-game/blob/main/docs/capture-3.png)
 
-https://taejin5314.github.io/js-shooting-game/
+## Deploy
+
+Playing the game: https://taejin5314.github.io/js-shooting-game/
